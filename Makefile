@@ -3,10 +3,12 @@
 
 .POSIX:
 
-PREFIX = /usr/local
-CFLAGS   = -pedantic -Wall -Wextra -Wno-deprecated-declarations -Wno-implicit-fallthrough -Os
+VERSION  = 1.0
+PREFIX   = /usr/local
+CPPFLAGS = -DVERSION=\"$(VERSION)\"
+CFLAGS   = -pedantic -Wall -Wextra -Wno-deprecated-declarations -Wno-implicit-fallthrough -Os $(CPPFLAGS)
 LDFLAGS  = -lX11
-CC = cc
+CC       = cc
 
 all: options slbar
 

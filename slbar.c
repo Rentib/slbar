@@ -166,8 +166,12 @@ updatecmd(const char *cmd, char *out, int add_sep)
 }
 
 int
-main (void)
+main(int argc, char *argv[])
 {
+  if (argc == 2 && !strcmp("-v", argv[1]))
+    die("slbar-"VERSION);
+  else if (argc != 1)
+    die("usage: slbar [-v]");
   if (!(dpy = XOpenDisplay(NULL)))
     die("slbar: cannot open display");
 
