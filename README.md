@@ -18,5 +18,6 @@ Configuration
 The configuration of slbar is done by creating a custom config.h
 and (re)compiling the source code.
 
-# credit
+Credit
+------
 [dwmblocks](https://github.com/torrinfail/dwmblocks)
