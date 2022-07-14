@@ -172,6 +172,7 @@ main(int argc, char *argv[])
     die("slbar-"VERSION);
   else if (argc != 1)
     die("usage: slbar [-v]");
+
   if (!(dpy = XOpenDisplay(NULL)))
     die("slbar: cannot open display");
 
