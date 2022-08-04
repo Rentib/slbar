@@ -92,17 +92,18 @@ display()
 void
 loop()
 {
-  uint i, upd_lcm = 1;
+  uint i, upd_lcm = 1, upd_gcd = 0;
 
   for (i = 0; i < LEN(modules); i++) {
-    upd_lcm = lcm(upd_lcm, modules[i].upd ? modules[i].upd : 1);
+    upd_gcd = gcd(modules[i].upd ? modules[i].upd : upd_gcd, upd_gcd);
+    upd_lcm = lcm(modules[i].upd ? modules[i].upd : 1, upd_lcm);
     updatecmd(modules[i].cmd, cmds[i], i < LEN(modules) - 1);
   }
 
-  for (i = 0; !break_loop; i %= upd_lcm) {
-    update(i++);
+  for (i = 0, upd_gcd = upd_gcd ? upd_gcd : 1; !break_loop; i %= upd_lcm) {
+    update(i += upd_gcd);
     display();
-    sleep(1.0);
+    sleep(upd_gcd);
   }
 }
 
