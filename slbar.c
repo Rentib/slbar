@@ -153,6 +153,7 @@ updatecmd(const char *cmd, char *out, int add_sep)
 {
   FILE *fp;
   size_t len;
+  *out = 0;
   if (!(fp = popen(cmd, "r")))
     return;
   fgets(out, CMDLEN - sep_len * add_sep - 1, fp);
