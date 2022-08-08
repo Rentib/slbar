@@ -30,7 +30,7 @@ static void setup(); /* sets up handling signals */
 static void sighandler(int sig); /* signal handler */
 static void termhandler(); /* SIGTERM handler */
 static void update(uint time); /* updates status bar */
-static void updatecmd(const char *cmd, char *out, int add_sep); /* updates given module */
+static void updatecmd(const char *cmd, char *out); /* updates given module */
 
 /* globals */
 static Display *dpy;
@@ -80,6 +80,7 @@ display()
 
   for (i = 0; i < LEN(modules); i++)
     strcat(barstr[new], cmds[i]);
+  barstr[new][strlen(barstr[new]) - sep_len] = '\0';
 
   if (!(strcmp(barstr[new], barstr[old])))
     return;
@@ -97,7 +98,7 @@ loop()
   for (i = 0; i < LEN(modules); i++) {
     upd_gcd = gcd(modules[i].upd ? modules[i].upd : upd_gcd, upd_gcd);
     upd_lcm = lcm(modules[i].upd ? modules[i].upd : 1, upd_lcm);
-    updatecmd(modules[i].cmd, cmds[i], i < LEN(modules) - 1);
+    updatecmd(modules[i].cmd, cmds[i]);
   }
 
   for (i = 0, upd_gcd = upd_gcd ? upd_gcd : 1; !break_loop; i %= upd_lcm) {
@@ -128,7 +129,7 @@ sighandler(int sig)
   uint i;
   for (m = modules, i = 0; i < LEN(modules); i++, m++)
     if ((int)m->sig + SIGRTMIN == sig)
-      updatecmd(m->cmd, cmds[i], i < LEN(modules) - 1);
+      updatecmd(m->cmd, cmds[i]);
   display();
 }
 
@@ -145,25 +146,24 @@ update(uint time)
   uint i;
   for (m = modules, i = 0; i < LEN(modules); i++, m++)
     if (m->upd && time % m->upd == 0)
-      updatecmd(m->cmd, cmds[i], i < LEN(modules) - 1);
+      updatecmd(m->cmd, cmds[i]);
 }
 
 void
-updatecmd(const char *cmd, char *out, int add_sep)
+updatecmd(const char *cmd, char *out)
 {
   FILE *fp;
   size_t len;
   *out = 0;
   if (!(fp = popen(cmd, "r")))
     return;
-  fgets(out, CMDLEN - sep_len * add_sep - 1, fp);
+  fgets(out, CMDLEN - sep_len - 1, fp);
   if (!(len = strlen(out))) {
     pclose(fp);
     return;
   }
   out[len - (out[len - 1] == '\n')] = '\0';
-  if (add_sep)
-    strcat(out, sep);
+  strcat(out, sep);
   pclose(fp);
 }
 
