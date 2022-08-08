@@ -3,7 +3,7 @@
 
 .POSIX:
 
-VERSION  = 1.0
+VERSION  = 1.1
 PREFIX   = /usr/local
 CPPFLAGS = -DVERSION=\"$(VERSION)\"
 CFLAGS   = -pedantic -Wall -Wextra -Wno-deprecated-declarations -Wno-implicit-fallthrough -Os $(CPPFLAGS)
