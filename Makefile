@@ -19,14 +19,14 @@ options:
 	@echo "CC      = $(CC)"
 
 slbar: slbar.c config.h
-	${CC} -o slbar slbar.c $(CFLAGS) $(LDFLAGS)
+	$(CC) -o slbar slbar.c $(CFLAGS) $(LDFLAGS)
 
 clean:
 	rm -f slbar slbar.o
 
 install: slbar
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp -f slbar $(DESTDIR)$(PREFIX)/bin/slbar
+	cp -f slbar $(DESTDIR)$(PREFIX)/bin
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/slbar
 
 uninstall:
