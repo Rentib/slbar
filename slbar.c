@@ -21,15 +21,15 @@ typedef struct {
 } Module;
 
 /* functions */
-static int gcd(int a, int b); /* greatest common divisor */
-static int lcm(int a, int b); /* least common multiple */
+static int gcd(int a, int b);          /* greatest common divisor */
+static int lcm(int a, int b);          /* least common multiple */
 static void die(const char *fmt, ...); /* prints error to stderr and exits */
-static void display(); /* displays status bar */
-static void loop(); /* main loop of the program */
-static void setup(); /* sets up handling signals */
-static void sighandler(int sig); /* signal handler */
-static void termhandler(); /* SIGTERM handler */
-static void update(uint time); /* updates status bar */
+static void display(void)              /* displays status bar */
+static void loop(void);                /* main loop of the program */
+static void setup(void);               /* sets up handling signals */
+static void sighandler(int sig);       /* signal handler */
+static void termhandler(void);         /* SIGTERM handler */
+static void update(uint time);         /* updates status bar */
 static void updatecmd(const char *cmd, char *out); /* updates given module */
 
 /* globals */
@@ -71,7 +71,7 @@ die(const char *fmt, ...)
 }
 
 void
-display()
+display(void)
 {
   uint old = current, new = current ^ 1;
   uint i;
@@ -91,7 +91,7 @@ display()
 }
 
 void
-loop()
+loop(void)
 {
   uint i, upd_lcm = 1, upd_gcd = 0;
 
@@ -109,7 +109,7 @@ loop()
 }
 
 void
-setup()
+setup(void)
 {
   const Module *m;
   uint i;
@@ -134,7 +134,7 @@ sighandler(int sig)
 }
 
 void
-termhandler()
+termhandler(void)
 {
   break_loop = 1;
 }
@@ -183,5 +183,5 @@ main(int argc, char *argv[])
 
   XCloseDisplay(dpy);
 
-  return 0;
+  return EXIT_SUCCESS;
 }
