@@ -56,7 +56,7 @@ index 9e03a3b..193268d 100644
  
  /* functions */
 @@ -74,13 +75,15 @@ void
- display()
+ display(void)
  {
    uint old = current, new = current ^ 1;
 -  uint i;

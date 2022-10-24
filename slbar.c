@@ -24,11 +24,11 @@ typedef struct {
 static int gcd(int a, int b);          /* greatest common divisor */
 static int lcm(int a, int b);          /* least common multiple */
 static void die(const char *fmt, ...); /* prints error to stderr and exits */
-static void display(void)              /* displays status bar */
+static void display(void);             /* displays status bar */
 static void loop(void);                /* main loop of the program */
 static void setup(void);               /* sets up handling signals */
 static void sighandler(int sig);       /* signal handler */
-static void termhandler(void);         /* SIGTERM handler */
+static void termhandler();             /* SIGTERM handler */
 static void update(uint time);         /* updates status bar */
 static void updatecmd(const char *cmd, char *out); /* updates given module */
 
@@ -134,7 +134,7 @@ sighandler(int sig)
 }
 
 void
-termhandler(void)
+termhandler()
 {
   break_loop = 1;
 }
