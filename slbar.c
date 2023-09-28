@@ -180,6 +180,7 @@ main(int argc, char *argv[])
   setup();
   loop();
 
+  XStoreName(dpy, root, NULL);
   XCloseDisplay(dpy);
 
   return EXIT_SUCCESS;
